@@ -1,0 +1,9 @@
+{
+  "name": "vue-admin-panel",
+  "version": "1.0.0",
+  "description": "Vue component based admin panel",
+  "main": "index.js",
+  "repository": "https://github.com/ejaytkm/vue-admin-panel.git",
+  "author": "calvin <calvinxhen@gmail.com>, ejay <ejaytkm@gmail.com>",
+  "license": "MIT"
+}
