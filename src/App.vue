@@ -1,17 +1,271 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+    <div style="padding: 50px">
+      <simple-table v-bind:inputdata="testingData" />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import simpleTable from './components/vue-simple-table.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    simpleTable
+  },
+  data() {
+    return {
+      testingData: [
+        {
+          firstname: 'Ejay',
+          lastname: 'Tan',
+          address: 'Mont Kiara',
+          age: '25',
+          dob: '1993-06-14',
+          created: '2018-06-14T12:00:55Z'
+        }, {
+          firstname: 'Calvin',
+          lastname: 'Ong',
+          address: 'Sg Buloh',
+          age: '24',
+          dob: '1994-10-10',
+          created: '2018-06-16T12:44:00Z'
+        }, {
+          firstname: 'Jamie',
+          lastname: 'Ho',
+          address: 'Mont Kiara',
+          age: '23',
+          dob: '1995-10-14',
+          created: '2018-06-19T12:20:10Z'
+        }, {
+          firstname: 'Ejay',
+          lastname: 'Tan',
+          address: 'Mont Kiara',
+          age: '25',
+          dob: '1993-06-14',
+          created: '2018-06-14T12:00:55Z'
+        }, {
+          firstname: 'Calvin',
+          lastname: 'Ong',
+          address: 'Sg Buloh',
+          age: '24',
+          dob: '1994-10-10',
+          created: '2018-06-16T12:44:00Z'
+        }, {
+          firstname: 'Jamie',
+          lastname: 'Ho',
+          address: 'Mont Kiara',
+          age: '23',
+          dob: '1995-10-14',
+          created: '2018-06-19T12:20:10Z'
+        }, {
+          firstname: 'Ejay',
+          lastname: 'Tan',
+          address: 'Mont Kiara',
+          age: '25',
+          dob: '1993-06-14',
+          created: '2018-06-14T12:00:55Z'
+        }, {
+          firstname: 'Calvin',
+          lastname: 'Ong',
+          address: 'Sg Buloh',
+          age: '24',
+          dob: '1994-10-10',
+          created: '2018-06-16T12:44:00Z'
+        }, {
+          firstname: 'Jamie',
+          lastname: 'Ho',
+          address: 'Mont Kiara',
+          age: '23',
+          dob: '1995-10-14',
+          created: '2018-06-19T12:20:10Z'
+        }, {
+          firstname: 'Ejay',
+          lastname: 'Tan',
+          address: 'Mont Kiara',
+          age: '25',
+          dob: '1993-06-14',
+          created: '2018-06-14T12:00:55Z'
+        }, {
+          firstname: 'Calvin',
+          lastname: 'Ong',
+          address: 'Sg Buloh',
+          age: '24',
+          dob: '1994-10-10',
+          created: '2018-06-16T12:44:00Z'
+        }, {
+          firstname: 'Jamie',
+          lastname: 'Ho',
+          address: 'Mont Kiara',
+          age: '23',
+          dob: '1995-10-14',
+          created: '2018-06-19T12:20:10Z'
+        }, {
+          firstname: 'Ejay',
+          lastname: 'Tan',
+          address: 'Mont Kiara',
+          age: '25',
+          dob: '1993-06-14',
+          created: '2018-06-14T12:00:55Z'
+        }, {
+          firstname: 'Calvin',
+          lastname: 'Ong',
+          address: 'Sg Buloh',
+          age: '24',
+          dob: '1994-10-10',
+          created: '2018-06-16T12:44:00Z'
+        }, {
+          firstname: 'Jamie',
+          lastname: 'Ho',
+          address: 'Mont Kiara',
+          age: '23',
+          dob: '1995-10-14',
+          created: '2018-06-19T12:20:10Z'
+        }, {
+          firstname: 'Ejay',
+          lastname: 'Tan',
+          address: 'Mont Kiara',
+          age: '25',
+          dob: '1993-06-14',
+          created: '2018-06-14T12:00:55Z'
+        }, {
+          firstname: 'Calvin',
+          lastname: 'Ong',
+          address: 'Sg Buloh',
+          age: '24',
+          dob: '1994-10-10',
+          created: '2018-06-16T12:44:00Z'
+        }, {
+          firstname: 'Jamie',
+          lastname: 'Ho',
+          address: 'Mont Kiara',
+          age: '23',
+          dob: '1995-10-14',
+          created: '2018-06-19T12:20:10Z'
+        }, {
+          firstname: 'Ejay',
+          lastname: 'Tan',
+          address: 'Mont Kiara',
+          age: '25',
+          dob: '1993-06-14',
+          created: '2018-06-14T12:00:55Z'
+        }, {
+          firstname: 'Calvin',
+          lastname: 'Ong',
+          address: 'Sg Buloh',
+          age: '24',
+          dob: '1994-10-10',
+          created: '2018-06-16T12:44:00Z'
+        }, {
+          firstname: 'Jamie',
+          lastname: 'Ho',
+          address: 'Mont Kiara',
+          age: '23',
+          dob: '1995-10-14',
+          created: '2018-06-19T12:20:10Z'
+        }, {
+          firstname: 'Ejay',
+          lastname: 'Tan',
+          address: 'Mont Kiara',
+          age: '25',
+          dob: '1993-06-14',
+          created: '2018-06-14T12:00:55Z'
+        }, {
+          firstname: 'Calvin',
+          lastname: 'Ong',
+          address: 'Sg Buloh',
+          age: '24',
+          dob: '1994-10-10',
+          created: '2018-06-16T12:44:00Z'
+        }, {
+          firstname: 'Jamie',
+          lastname: 'Ho',
+          address: 'Mont Kiara',
+          age: '23',
+          dob: '1995-10-14',
+          created: '2018-06-19T12:20:10Z'
+        }, {
+          firstname: 'Ejay',
+          lastname: 'Tan',
+          address: 'Mont Kiara',
+          age: '25',
+          dob: '1993-06-14',
+          created: '2018-06-14T12:00:55Z'
+        }, {
+          firstname: 'Calvin',
+          lastname: 'Ong',
+          address: 'Sg Buloh',
+          age: '24',
+          dob: '1994-10-10',
+          created: '2018-06-16T12:44:00Z'
+        }, {
+          firstname: 'Jamie',
+          lastname: 'Ho',
+          address: 'Mont Kiara',
+          age: '23',
+          dob: '1995-10-14',
+          created: '2018-06-19T12:20:10Z'
+        }, {
+          firstname: 'Ejay',
+          lastname: 'Tan',
+          address: 'Mont Kiara',
+          age: '25',
+          dob: '1993-06-14',
+          created: '2018-06-14T12:00:55Z'
+        }, {
+          firstname: 'Calvin',
+          lastname: 'Ong',
+          address: 'Sg Buloh',
+          age: '24',
+          dob: '1994-10-10',
+          created: '2018-06-16T12:44:00Z'
+        }, {
+          firstname: 'Jamie',
+          lastname: 'Ho',
+          address: 'Mont Kiara',
+          age: '23',
+          dob: '1995-10-14',
+          created: '2018-06-19T12:20:10Z'
+        }, {
+          firstname: 'Ejay',
+          lastname: 'Tan',
+          address: 'Mont Kiara',
+          age: '25',
+          dob: '1993-06-14',
+          created: '2018-06-14T12:00:55Z'
+        }, {
+          firstname: 'Calvin',
+          lastname: 'Ong',
+          address: 'Sg Buloh',
+          age: '24',
+          dob: '1994-10-10',
+          created: '2018-06-16T12:44:00Z'
+        }, {
+          firstname: 'Jamie',
+          lastname: 'Ho',
+          address: 'Mont Kiara',
+          age: '23',
+          dob: '1995-10-14',
+          created: '2018-06-19T12:20:10Z'
+        }, {
+          firstname: 'Ejay',
+          lastname: 'Tan',
+          address: 'Mont Kiara',
+          age: '25',
+          dob: '1993-06-14',
+          created: '2018-06-14T12:00:55Z'
+        }, {
+          firstname: 'Calvin',
+          lastname: 'Ong',
+          address: 'Sg Buloh',
+          age: '24',
+          dob: '1994-10-10',
+          created: '2018-06-16T12:44:00Z'
+        }
+      ]
+    }
   }
 }
 </script>
