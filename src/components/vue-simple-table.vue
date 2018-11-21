@@ -67,6 +67,7 @@ export default {
 
   data () {
     return {
+      mode: 'data',
       dataColumnList: [],
 
       filter: {
@@ -78,8 +79,6 @@ export default {
         pageLimit: 0,
         size: 30
       },
-
-      mode: 'data',
 
       config: {
         filename: ''
