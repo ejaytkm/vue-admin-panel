@@ -15,15 +15,21 @@ yarn run serve
 yarn run build
 ```
 
-### Run your tests
+### Configurations
+Configuration object. More configurations will be add based on demand.
 ```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
+config: {
+  filename: ''
+}
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Example of component
+```
+<simple-table
+  :inputdata="testingData"
+  :configdata="config"
+/>
+```
+
+<!-- ### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/). -->
