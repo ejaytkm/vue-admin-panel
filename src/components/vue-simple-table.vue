@@ -28,7 +28,6 @@
         <p>Next</p>
       </button>
     </div>
-
     <!-- .field.is-horizontal.nav-pagination
       .control.buttons.has-addons
         .button(@click="changePage('previous', 'configWinners')")
