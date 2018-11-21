@@ -19,11 +19,11 @@ yarn run build
 Configuration object. More configurations will be add based on demand.
 ```
 config: {
-  filename: ''
+  filename: 'testingconfig' // csv fileaname | default : 'data'
 }
 ```
 
-Example of component
+Example of component declaration
 ```
 <simple-table
   :inputdata="testingData"
