@@ -15,9 +15,11 @@ import simpleTable from './components/vue-simple-table.vue'
 
 export default {
   name: 'app',
+
   components: {
     simpleTable
   },
+
   data () {
     return {
       testingData: [
@@ -43,6 +45,7 @@ export default {
       }
     }
   },
+
   created () {
     // lazy duplication of data
     for (let i = 0; i < 5; i++) {

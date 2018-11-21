@@ -15,6 +15,11 @@ yarn run serve
 yarn run build
 ```
 
+### Features
+- Pagination
+- CSV Download
+- Searchable by Keyword
+
 ### Configurations
 Configuration object. More configurations will be add based on demand.
 ```
