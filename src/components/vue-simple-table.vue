@@ -2,18 +2,19 @@
   <div>
     <div>
       <input v-model="filter.keyword" />
+      <button @click="downloadCSV()">CSV</button>
     </div>
     <table>
-      <thead>
+      <thead>.
         <tr>
-          <td class="tableHeader" v-for="value in valueHeader">
+          <td class="tableHeader" v-for="value in dataColumnList">
             <b>{{ value }}</b>
           </td>
         </tr>
       </thead>
       <tbody>
         <tr v-for="value in valueBody">
-          <td v-for="keyvalue in valueHeader">{{ value[keyvalue] }}</td>
+          <td v-for="keyvalue in dataColumnList">{{ value[keyvalue] }}</td>
         </tr>
       </tbody>
     </table>
@@ -28,14 +29,6 @@
         <p>Next</p>
       </button>
     </div>
-    <!-- .field.is-horizontal.nav-pagination
-      .control.buttons.has-addons
-        .button(@click="changePage('previous', 'configWinners')")
-          i.fas.fa-angle-left
-        .button(v-for="page in configWinners.pageLimit" v-bind:class="{ active: (page === configWinners.page + 1) }" @click="changePage(page, 'configWinners')")
-          p {{ page }}
-        .button(@click="changePage('next', 'configWinners')")
-          i.fas.fa-angle-right -->
   </div>
 </template>
 
@@ -64,10 +57,11 @@
 
 export default {
   name: 'vue-simple-table',
-  props: ['inputdata'],
+  props: ['inputdata', 'config'],
+
   data () {
     return {
-      valueHeader: [],
+      dataColumnList: [],
 
       filter: {
         keyword: null,
@@ -77,11 +71,15 @@ export default {
         page: 0,
         pageLimit: 0,
         size: 30
-      }
+      },
+
+      filename: '',
     }
   },
+
   created () {
-    this.valueHeader = Object.keys(this.inputdata[0])
+    this.dataColumnList = Object.keys(this.inputdata[0])
+    this.initConfig(this.config)
   },
 
   computed: {
@@ -92,8 +90,8 @@ export default {
           return entry
         }
 
-        for (let i = 0; i < this.valueHeader.length; i++) {
-          if (reg.test(entry[this.valueHeader[i]])) {
+        for (let i = 0; i < this.dataColumnList.length; i++) {
+          if (reg.test(entry[this.dataColumnList[i]])) {
             return entry
           }
         }
@@ -115,6 +113,69 @@ export default {
       if (d === 'next') {
         return this.pagination.page = Math.min(this.pagination.pageLimit - 1, this.pagination.page + 1)
       }
+    },
+
+    downloadCSV (d) {
+      const filename = `${this.filename}_${new Date().toLocaleString()}.csv`
+      const csvRow = []
+
+      csvRow.push(this.dataColumnList) // csv labels - comment this out to remove label
+
+      this.inputdata.map(data => {
+        const dataRow = []
+
+        Object.values(data).map(value => { dataRow.push(`${value}`) })
+
+        csvRow.push(dataRow)
+      })
+
+      const processRow = (row) => {
+        let finalVal = ''
+
+        for (let j = 0; j < row.length; j++) {
+          const innerValue = row[j] === null ? '' : row[j].toString()
+          const result = '"' + innerValue.replace(/"/g, '""') + '"'
+
+          if (j > 0) {
+            finalVal += ','
+          }
+
+          finalVal += result
+        }
+
+        finalVal = finalVal.replace(/，/g, ',')
+
+        return finalVal + '\n'
+      }
+
+      let csvFile = ''
+
+      for (let i = 0; i < csvRow.length; i++) {
+        csvFile += processRow(csvRow[i])
+      }
+
+      const blob = new window.Blob([csvFile], { type: 'text/csv;charset=utf-8,%EF%BB%BF;' })
+
+      if (navigator.msSaveBlob) {
+        navigator.msSaveBlob(blob, filename)
+      } else {
+        const link = document.createElement('a')
+
+        if (link.download !== undefined) {
+          const url = URL.createObjectURL(blob)
+          link.setAttribute('href', url)
+          link.setAttribute('download', filename)
+          link.style.visibility = 'hidden'
+
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+        }
+      }
+    },
+
+    initConfig (config) {
+      this.filename = config.filename || 'data'
     }
   }
 }

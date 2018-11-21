@@ -2,7 +2,10 @@
   <div id="app">
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <div style="padding: 50px">
-      <simple-table v-bind:inputdata="testingData" />
+      <simple-table
+        v-bind:inputdata="testingData"
+        v-bind:config="config"
+      />
     </div>
   </div>
 </template>
@@ -15,25 +18,37 @@ export default {
   components: {
     simpleTable
   },
-  data() {
+  data () {
     return {
       testingData: [
         {
           firstname: 'Ejayarin',
           lastname: 'Tamarin',
-          address: 'Mona Ciara',
+          address: 'Mona Ciara, Perole Jansen',
           age: '45',
           dob: '1993-06-14',
           created: '2018-06-14T12:00:55Z'
         }, {
           firstname: 'Calvineese',
           lastname: 'Ongela',
-          address: 'St Boloh',
+          address: 'St Boloh, Richardson Road',
           age: '42',
           dob: '1994-10-10',
           created: '2018-06-16T12:44:00Z'
         }
-      ]
+      ],
+
+      config: {
+        filename: 'testing'
+      }
+    }
+  },
+  created () {
+    // lazy duplication of data
+    for (let i = 0; i < 4; i++) {
+      this.testingData.map(data =>{
+        this.testingData.push(data)
+      })
     }
   }
 }
