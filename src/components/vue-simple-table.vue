@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <input v-model="filter.keyword" />
+      <input v-model="filter.keyword" placeholder="Search keyword"/>
       <button @click="downloadCSV()">CSV</button>
     </div>
     <table>
@@ -22,9 +22,11 @@
       <button @click="changePage('previous')">
         <p>Prev</p>
       </button>
-      <button v-for="pagenumber in pagination.pageLimit" @click="pagination.page = pagenumber - 1">
+
+      <button v-for="pagenumber in pagination.pageLimit" @click="pagination.page = pagenumber - 1" :class="{ active: (pagenumber === pagination.page + 1) }">
         <p>{{ pagenumber }}</p>
       </button>
+
       <button @click="changePage('next')">
         <p>Next</p>
       </button>
@@ -51,13 +53,17 @@
     text-transform: capitalize
   }
 
+  button.active {
+    border: 3px solid orange
+  }
+
 </style>
 
 <script>
 
 export default {
   name: 'vue-simple-table',
-  props: ['inputdata', 'config'],
+  props: ['inputdata', 'configdata'],
 
   data () {
     return {
@@ -73,17 +79,21 @@ export default {
         size: 30
       },
 
-      filename: '',
+      mode: 'data',
+
+      config: {
+        filename: ''
+      },
     }
   },
 
   created () {
     this.dataColumnList = Object.keys(this.inputdata[0])
-    this.initConfig(this.config)
+    this.initConfig(this.configdata)
   },
 
   computed: {
-    valueBody () {
+    valueBody (mode) {
       const reg = new RegExp(this.filter.keyword, 'ig')
       const filtered = this.inputdata.filter(entry => {
         if (!this.filter.keyword) {
@@ -96,6 +106,10 @@ export default {
           }
         }
       })
+
+      if (this.mode === 'csv') {
+        return filtered
+      }
 
       this.pagination.pageLimit = Math.ceil(filtered.length / this.pagination.size)
       const slicePagination = filtered.slice(this.pagination.page * this.pagination.size, (this.pagination.page + 1) * this.pagination.size)
@@ -116,42 +130,21 @@ export default {
     },
 
     downloadCSV (d) {
-      const filename = `${this.filename}_${new Date().toLocaleString()}.csv`
-      const csvRow = []
-
-      csvRow.push(this.dataColumnList) // csv labels - comment this out to remove label
-
-      this.inputdata.map(data => {
-        const dataRow = []
-
-        Object.values(data).map(value => { dataRow.push(`${value}`) })
-
-        csvRow.push(dataRow)
-      })
-
-      const processRow = (row) => {
-        let finalVal = ''
-
-        for (let j = 0; j < row.length; j++) {
-          const innerValue = row[j] === null ? '' : row[j].toString()
-          const result = '"' + innerValue.replace(/"/g, '""') + '"'
-
-          if (j > 0) {
-            finalVal += ','
-          }
-
-          finalVal += result
-        }
-
-        finalVal = finalVal.replace(/，/g, ',')
-
-        return finalVal + '\n'
-      }
+      const filename = `${this.config.filename}_${new Date().toLocaleString()}.csv`
+      const csvRow = [this.dataColumnList]
 
       let csvFile = ''
 
+      this.mode = 'csv'
+
+      this.valueBody.map(data => {
+        const dataRow = []
+        Object.values(data).map(value => { dataRow.push(`${value}`) })
+        csvRow.push(dataRow)
+      })
+
       for (let i = 0; i < csvRow.length; i++) {
-        csvFile += processRow(csvRow[i])
+        csvFile += this.processRow(csvRow[i])
       }
 
       const blob = new window.Blob([csvFile], { type: 'text/csv;charset=utf-8,%EF%BB%BF;' })
@@ -160,9 +153,9 @@ export default {
         navigator.msSaveBlob(blob, filename)
       } else {
         const link = document.createElement('a')
+        const url = URL.createObjectURL(blob)
 
         if (link.download !== undefined) {
-          const url = URL.createObjectURL(blob)
           link.setAttribute('href', url)
           link.setAttribute('download', filename)
           link.style.visibility = 'hidden'
@@ -172,10 +165,31 @@ export default {
           document.body.removeChild(link)
         }
       }
+
+      this.mode = ''
     },
 
-    initConfig (config) {
-      this.filename = config.filename || 'data'
+    initConfig (configdata) {
+      this.config.filename = configdata.filename || 'data'
+    },
+
+    processRow (row) {
+      let finalVal = ''
+
+      for (let j = 0; j < row.length; j++) {
+        const innerValue = row[j] === null ? '' : row[j].toString()
+        const result = '"' + innerValue.replace(/"/g, '""') + '"'
+
+        if (j > 0) {
+          finalVal += ','
+        }
+
+        finalVal += result
+      }
+
+      finalVal = finalVal.replace(/，/g, ',')
+
+      return finalVal + '\n'
     }
   }
 }

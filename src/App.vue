@@ -3,8 +3,8 @@
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <div style="padding: 50px">
       <simple-table
-        v-bind:inputdata="testingData"
-        v-bind:config="config"
+        :inputdata="testingData"
+        :configdata="config"
       />
     </div>
   </div>
@@ -25,7 +25,7 @@ export default {
           firstname: 'Ejayarin',
           lastname: 'Tamarin',
           address: 'Mona Ciara, Perole Jansen',
-          age: '45',
+          age: '52',
           dob: '1993-06-14',
           created: '2018-06-14T12:00:55Z'
         }, {
@@ -39,13 +39,13 @@ export default {
       ],
 
       config: {
-        filename: 'testing'
+        filename: 'mytesting.com'
       }
     }
   },
   created () {
     // lazy duplication of data
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
       this.testingData.map(data =>{
         this.testingData.push(data)
       })
